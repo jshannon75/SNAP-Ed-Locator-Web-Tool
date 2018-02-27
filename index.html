@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<!--<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
+			integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+			crossorigin=""/>-->
+		<link rel="stylesheet" href="js/leaflet/leaflet.css">
+		<link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@2.6.0/dist/style.css">
+		<link  href="https://unpkg.com/leaflet-geosearch@latest/assets/css/leaflet.css" rel="stylesheet" />
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+		.info {
+			padding: 6px 8px;
+			font: 14px/16px Arial, Helvetica, sans-serif;
+			background: white;
+			background: rgba(255,255,255,0.8);
+			box-shadow: 0 0 15px rgba(0,0,0,0.2);
+			border-radius: 5px;
+		}
+		.info h4 {
+			margin: 0 0 5px;
+			color: #777;
+		}
+        </style>
+        <title></title>	
+    </head>
+	
+    <body>
+        <div id="map">
+        </div>
+		<script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
+			integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
+			crossorigin=""></script>
+		<script src="https://unpkg.com/@mapbox/leaflet-pip@latest/leaflet-pip.js"></script>
+		<!--
+		<script type="text/javascript" src="js/leaflet-geosearch/bundle.min.js" charset="utf-8"></script>
+		<script type="text/javascript" src="js/leaflet-geosearch/bundle.js" charset="utf-8"></script>
+		-->
+		<script src="https://unpkg.com/leaflet-geosearch@2.6.0/dist/bundle.js"></script>
+		<script src="https://unpkg.com/leaflet-geosearch@2.6.0/dist/bundle.min.js"></script>
+		
+		
+        <script src="data/17FreeRedAllSchools_buffer.js"></script>
+		<script src="data/CongressionalDistrictGA.js"></script>
+		<script src="data/Promise_zones_GA.js"></script>
+		<script src="data/StrikeForce_GA.js"></script>
+		<script src="data/Tract_poverty_above50.js"></script>
+		
+		<script src="js/Autolinker.min.js"></script>
+		<script src="js/leaflet/leaflet.js"></script>
+		
+		<!--
+		<script src="js/leaflet/leaflet-src.js"></script>
+		-->
+		
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        });
+        
+		var bounds_group = new L.featureGroup([]);
+		
+		//Add basemap from mapbox
+		var basemap = L.tileLayer('https://api.mapbox.com/styles/v1/wyjx1220/cje4iobyk71lj2rmwvjxsbmkl/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoid3lqeDEyMjAiLCJhIjoiY2pkdXBwMW84MWhwbDJ4bnk2OHh2OHhkMCJ9.5Evu2HhCD7u2Mi-KJ2NqOg', {
+            attribution: 'Map data &copy; <a href="http://mapbox.com">Mapbox</a>',
+            maxZoom: 28
+        });
+        basemap.addTo(map);
+
+		
+		function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
+        }
+		//Add Promise zones layer
+		
+        function pop_Promise_zones_GA(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Strike Force County</th>\
+                        <td>' + (feature.properties['COMMUNITY'] !== null ? Autolinker.link(String(feature.properties['COMMUNITY'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            //layer.bindPopup(popupContent, {maxHeight: 401});
+			layer.on({
+			click: clickPoint
+			});
+        }
+		
+		map.createPane('pane_Promise_zones_GA');
+        map.getPane('pane_Promise_zones_GA').style.zIndex = 404;
+        map.getPane('pane_Promise_zones_GA').style['mix-blend-mode'] = 'normal';
+		
+		
+        function style_Promise_zones_GA() {
+            return {
+                opacity: 1,
+                color: 'rgba(0,0,0,0.25)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(238, 68, 244 ,0.25)',
+            }
+        }
+		
+        var layer_Promise_zones_GA = new L.geoJson(json_Promise_zones_GA, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_Promise_zones_GA',
+			onEachFeature: pop_Promise_zones_GA,
+			style: style_Promise_zones_GA,
+			interactive: true
+        });
+		bounds_group.addLayer(layer_Promise_zones_GA);
+        map.addLayer(layer_Promise_zones_GA);
+		
+		//Add Congressional District layer
+		
+        function pop_CongressionalDistrictGA(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Congressional District</th>\
+                        <td>' + (feature.properties['CD114FP'] !== null ? Autolinker.link(String(feature.properties['CD114FP'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            //layer.bindPopup(popupContent, {maxHeight: 400});
+			layer.on({
+			click: clickPoint
+			});
+        }
+		
+		map.createPane('pane_CongressionalDistrictGA');
+        map.getPane('pane_CongressionalDistrictGA').style.zIndex = 400;
+        map.getPane('pane_CongressionalDistrictGA').style['mix-blend-mode'] = 'normal';
+		
+		
+        function style_CongressionalDistrictGA() {
+            return {
+                /*pane: 'CongressionalDistrictGA',*/
+                opacity: 1,
+				//Red outline
+                color: 'rgba(241,152,182,1)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 3.0, 
+                fill: true,
+                fillOpacity: 0,
+                //fillColor: 'rgba(241,152,182,0.25)',
+            }
+        }
+		
+        var layer_CongressionalDistrictGA = new L.geoJson(json_CongressionalDistrictGA, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_CongressionalDistrictGA',
+			onEachFeature: pop_CongressionalDistrictGA,
+			style: style_CongressionalDistrictGA,
+			interactive: true
+        });
+		bounds_group.addLayer(layer_CongressionalDistrictGA);
+        map.addLayer(layer_CongressionalDistrictGA);
+			
+		
+		//Add Strike Force layer
+		
+		
+        function pop_StrikeForce_GA(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Strike Force County</th>\
+                        <td>' + (feature.properties['NAME'] !== null ? Autolinker.link(String(feature.properties['NAME'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            //layer.bindPopup(popupContent, {maxHeight: 401});
+			layer.on({
+			click: clickPoint
+			});
+        }
+		
+		map.createPane('pane_StrikeForce_GA');
+        map.getPane('pane_StrikeForce_GA').style.zIndex = 401;
+        map.getPane('pane_StrikeForce_GA').style['mix-blend-mode'] = 'normal';
+		
+		
+        function style_StrikeForce_GA() {
+            return {
+                /*pane: 'CongressionalDistrictGA',*/
+                opacity: 1,
+                color: 'rgba(0,0,0,0.25)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(106, 228, 242 ,0.25)',
+            }
+        }
+		
+        var layer_StrikeForce_GA = new L.geoJson(json_StrikeForce_GA, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_StrikeForce_GA',
+			onEachFeature: pop_StrikeForce_GA,
+			style: style_StrikeForce_GA,
+			interactive: true
+        });
+		bounds_group.addLayer(layer_StrikeForce_GA);
+        map.addLayer(layer_StrikeForce_GA);
+        
+		//Add poverty layer
+		
+		
+        function pop_Tract_poverty_above50(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Poverty Percent</th>\
+                        <td>' + (feature.properties['PovertyPct'] !== null ? Autolinker.link(String(feature.properties['PovertyPct'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            //layer.bindPopup(popupContent, {maxHeight: 402});
+			layer.on({
+			click: clickPoint
+			});
+        }
+		
+		map.createPane('pane_Tract_poverty_above50');
+        map.getPane('pane_Tract_poverty_above50').style.zIndex = 402;
+        map.getPane('pane_Tract_poverty_above50').style['mix-blend-mode'] = 'normal';
+		
+		
+        function style_Tract_poverty_above50() {
+            return {
+                opacity: 1,
+                color: 'rgba(0,0,0,0.25)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(244, 220, 66 ,0.25)',
+            }
+        }
+		
+        var layer_Tract_poverty_above50 = new L.geoJson(json_Tract_poverty_above50, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_Tract_poverty_above50',
+			onEachFeature: pop_Tract_poverty_above50,
+			style: style_Tract_poverty_above50,
+			interactive: true
+        });
+		bounds_group.addLayer(layer_Tract_poverty_above50);
+        map.addLayer(layer_Tract_poverty_above50);
+		
+		//Add FreeRedLunch Schools layer
+		
+        function pop_17FreeRedAllSchools_buffer(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Strike Force County</th>\
+                        <td>' + (feature.properties['School_Nam'] !== null ? Autolinker.link(String(feature.properties['School_Nam'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            //layer.bindPopup(popupContent, {maxHeight: 401});
+			layer.on({
+			click: clickPoint
+			});
+        }
+		
+		map.createPane('pane_17FreeRedAllSchools_buffer');
+        map.getPane('pane_17FreeRedAllSchools_buffer').style.zIndex = 403;
+        map.getPane('pane_17FreeRedAllSchools_buffer').style['mix-blend-mode'] = 'normal';
+		
+		
+        function style_17FreeRedAllSchools_buffer() {
+            return {
+                opacity: 1,
+                color: 'rgba(0,0,0,0.25)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(244, 182, 66 ,0.25)',
+            }
+        }
+		
+        var layer_17FreeRedAllSchools_buffer = new L.geoJson(json_17FreeRedAllSchools_buffer, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_17FreeRedAllSchools_buffer',
+			onEachFeature: pop_17FreeRedAllSchools_buffer,
+			style: style_17FreeRedAllSchools_buffer,
+			interactive: true
+        });
+		bounds_group.addLayer(layer_17FreeRedAllSchools_buffer);
+        map.addLayer(layer_17FreeRedAllSchools_buffer);
+		
+		//Add overlays control
+				
+		var QualifiedResults='';
+		var match = 0;	
+		var basemap={};
+		var layergroups=([layer_Promise_zones_GA,layer_StrikeForce_GA,layer_CongressionalDistrictGA,layer_Tract_poverty_above50,layer_17FreeRedAllSchools_buffer]);
+		var popupproperties=["COMMUNITY","NAME","CD114FP","pct_185","School_Nam"];
+		var popupContents=[];
+		var ClickMarker;
+
+		//Layer Control
+		L.control.layers(basemap,{
+			"Promise Zone":layer_Promise_zones_GA,
+			"Strike Force":layer_StrikeForce_GA,
+			"Congressional District":layer_CongressionalDistrictGA,
+			"Poverty precent above 50%":layer_Tract_poverty_above50,
+			"Free Reduced Lunch School Buffer":layer_17FreeRedAllSchools_buffer
+			},{collapsed:false}).addTo(map);
+		
+		//Click event function
+		function clickPoint(e){
+			//Remove previous marker from searchbox
+			searchControl.clearResults(null,true);
+			//Remove previous marker from click event
+			if (ClickMarker){
+				map.removeLayer(ClickMarker);
+			}
+			
+			var QualifiedResults='';
+			var match = 0;
+			popupContents=[];
+			//Add marker for the clicked point
+			ClickMarker=new L.marker(e.latlng).addTo(map);
+	
+			for (i=0;i<layergroups.length;i++){
+				match = match+leafletPip.pointInLayer(e.latlng, layergroups[i], false).length;
+				if(leafletPip.pointInLayer(e.latlng, layergroups[i], false).length>0){
+					popupContents.push((leafletPip.pointInLayer(e.latlng, layergroups[i], false))[0].feature.properties[popupproperties[i]]);
+				}
+				else popupContents.push("Not applicable")	
+			}
+			if (match > 1) {
+					var QualifiedResults="Qualified";
+				}
+			
+				else QualifiedResults="Unqualified";			
+			info.update(QualifiedResults,popupContents);
+		}
+		
+		
+		
+		// Qualification info
+		var info = L.control();
+
+		info.onAdd = function (map) {
+			this._div = L.DomUtil.create('div', 'info');
+			this.update();
+			return this._div;
+		};
+
+		info.update = function (props) {
+			this._div.innerHTML = '<h1>' + props+'</h1><br><b>Promise Zones: </b>'+popupContents[0]+'<br><b>Strike Force County: </b>' + popupContents[1]+'<br><b>Congressional District: </b>' + popupContents[2]+ '<br><b>Poverty Percent: </b>:' + popupContents[3]+'<br><b>Within 1 mile from FreeRedLunch School: </b>:' + popupContents[4];
+		};
+
+		info.addTo(map);
+		
+		function SearchResultsUpdate(x,y){
+			//Remove previous marker
+			if (ClickMarker){
+				map.removeLayer(ClickMarker);
+			}
+			
+			var QualifiedResults='';
+			var match = 0;
+			popupContents=[];
+			//Add marker for the clicked point
+			ClickMarker=new L.marker([x,y]).addTo(map);
+			//determine if the point intersects with each layer	
+			for (i=0;i<layergroups.length;i++){
+				match = match+leafletPip.pointInLayer([x,y], layergroups[i], false).length;
+				if(leafletPip.pointInLayer([x,y], layergroups[i], false).length>0){
+					popupContents.push((leafletPip.pointInLayer([x,y], layergroups[i], false))[0].feature.properties[popupproperties[i]]);
+
+				}
+				else popupContents.push("Not applicable")	
+			}
+			if (match > 1) {
+					var QualifiedResults="Qualified";
+				}
+			
+				else QualifiedResults="Unqualified";			
+			info.update(QualifiedResults,popupContents);
+		}
+		
+		//Add GeoSearch box
+		var GeoSearchControl = window.GeoSearch.GeoSearchControl;
+		var GoogleProvider = window.GeoSearch.GoogleProvider;
+		var myProvider = new GoogleProvider;
+
+		var searchControl = new GeoSearchControl({
+				provider: myProvider,           // required
+				showMarker: true,               // optional: true|false  - default true
+				marker: {                       // optional: L.Marker    - default L.Icon.Default
+					icon: new L.Icon.Default(),
+					draggable: false,
+				},
+				maxMarkers: 1,                  // optional: number      - default 1
+				retainZoomLevel:true,
+				style: 'button',                   // optional: bar|button  - default button
+				autoComplete: true,             // optional: true|false  - default true
+				autoCompleteDelay: 250,         // optional: number      - default 250
+				searchLabel: 'Enter address',   // optional: string      - default 'Enter address'
+				keepResult: true              // optional: true|false  - default false
+		});
+		map.addControl(searchControl);
+
+		//update info box if a point is searched
+		map.on('geosearch/showlocation', function(result) {
+			if (ClickMarker){
+				map.removeLayer(ClickMarker);
+			}
+			SearchResultsUpdate(result.location.x,result.location.y);
+		});
+		
+		//Set bounds
+		setBounds();
+		
+        </script>
+		<!--<script src="js/leaflet/leaflet.js"></script>-->
+
+    </body>
+</html>
