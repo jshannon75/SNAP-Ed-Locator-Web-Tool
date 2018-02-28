@@ -99,21 +99,21 @@
         }
 		
 		map.createPane('pane_Promise_zones_GA');
-        map.getPane('pane_Promise_zones_GA').style.zIndex = 404;
+        map.getPane('pane_Promise_zones_GA').style.zIndex = 420;
         map.getPane('pane_Promise_zones_GA').style['mix-blend-mode'] = 'normal';
 		
 		
         function style_Promise_zones_GA() {
             return {
                 opacity: 1,
-                color: 'rgba(0,0,0,0.25)',
+                color: 'rgba(0,0,0,0)',
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
                 weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(238, 68, 244 ,0.25)',
+                fillColor: 'rgba(228, 26, 28 ,0.55)',
             }
         }
 		
@@ -143,7 +143,7 @@
         }
 		
 		map.createPane('pane_CongressionalDistrictGA');
-        map.getPane('pane_CongressionalDistrictGA').style.zIndex = 400;
+        map.getPane('pane_CongressionalDistrictGA').style.zIndex = 430;
         map.getPane('pane_CongressionalDistrictGA').style['mix-blend-mode'] = 'normal';
 		
 		
@@ -152,7 +152,7 @@
                 /*pane: 'CongressionalDistrictGA',*/
                 opacity: 1,
 				//Red outline
-                color: 'rgba(241,152,182,1)',
+                color: 'rgba(51,0,0,0.8)',
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
@@ -199,14 +199,14 @@
             return {
                 /*pane: 'CongressionalDistrictGA',*/
                 opacity: 1,
-                color: 'rgba(0,0,0,0.25)',
+                color: 'rgba(200,200,200,0)',
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
                 weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(106, 228, 242 ,0.25)',
+                fillColor: 'rgba(179, 205, 227 ,0.7)',
             }
         }
 		
@@ -244,14 +244,14 @@
         function style_Tract_poverty_above50() {
             return {
                 opacity: 1,
-                color: 'rgba(0,0,0,0.25)',
+                color: 'rgba(0,0,0,0)',
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
                 weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(244, 220, 66 ,0.25)',
+                fillColor: 'rgba(253, 205, 172 ,0.5)',
             }
         }
 		
@@ -288,14 +288,14 @@
         function style_17FreeRedAllSchools_buffer() {
             return {
                 opacity: 1,
-                color: 'rgba(0,0,0,0.25)',
+                color: 'rgba(0,0,0,0)',
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
                 weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(244, 182, 66 ,0.25)',
+                fillColor: 'rgba(77, 175, 74 ,0.35)',
             }
         }
 		
@@ -321,11 +321,11 @@
 
 		//Layer Control
 		L.control.layers(basemap,{
-			"Promise Zone":layer_Promise_zones_GA,
-			"Strike Force":layer_StrikeForce_GA,
 			"Congressional District":layer_CongressionalDistrictGA,
-			"Poverty precent above 50%":layer_Tract_poverty_above50,
-			"Free Reduced Lunch School Buffer":layer_17FreeRedAllSchools_buffer
+			"Strike Force":layer_StrikeForce_GA,
+			"Poverty percentage above 50%":layer_Tract_poverty_above50,
+			"FRPL School Buffer":layer_17FreeRedAllSchools_buffer,
+			"Promise Zone":layer_Promise_zones_GA
 			},{collapsed:false}).addTo(map);
 		
 		//Click event function
@@ -370,7 +370,7 @@
 		};
 
 		info.update = function (props) {
-			this._div.innerHTML = '<h1>' + props+'</h1><br><b>Promise Zones: </b>'+popupContents[0]+'<br><b>Strike Force County: </b>' + popupContents[1]+'<br><b>Congressional District: </b>' + popupContents[2]+ '<br><b>Poverty Percent: </b>:' + popupContents[3]+'<br><b>Within 1 mile from FreeRedLunch School: </b>:' + popupContents[4];
+			this._div.innerHTML = '<h1>' + props+'</h1><br><b>Congressional District: </b>' + popupContents[2]+'<br><b>Strike Force: </b>' + popupContents[1]+ '<br><b>Poverty percentage: </b>:' + popupContents[3]+'<br><b>Within 1 mile of FRPL school </b>:' + popupContents[4] + '<br><b>Promise Zone: </b>'+popupContents[0];
 		};
 
 		info.addTo(map);
