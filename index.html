@@ -53,7 +53,6 @@
         <script src="Data/17FreeRedAllSchools_buffer.js"></script>
 		<script src="Data/CongressionalDistrictGA.js"></script>
 		<script src="Data/Promise_zones_GA.js"></script>
-		<script src="Data/StrikeForce_GA.js"></script>
 		<script src="Data/Tract_poverty_above50.js"></script>
 		
 		<script src="js/Autolinker.min.js"></script>
@@ -176,50 +175,6 @@
 		
 		//Add Strike Force layer
 		
-		
-        function pop_StrikeForce_GA(feature, layer) {
-            var popupContent = '<table>\
-                    <tr>\
-                        <th scope="row">Strike Force County</th>\
-                        <td>' + (feature.properties['NAME'] !== null ? Autolinker.link(String(feature.properties['NAME'])) : '') + '</td>\
-                    </tr>\
-                </table>';
-            //layer.bindPopup(popupContent, {maxHeight: 401});
-			layer.on({
-			click: clickPoint
-			});
-        }
-		
-		map.createPane('pane_StrikeForce_GA');
-        map.getPane('pane_StrikeForce_GA').style.zIndex = 401;
-        map.getPane('pane_StrikeForce_GA').style['mix-blend-mode'] = 'normal';
-		
-		
-        function style_StrikeForce_GA() {
-            return {
-                /*pane: 'CongressionalDistrictGA',*/
-                opacity: 1,
-                color: 'rgba(200,200,200,0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(179, 205, 227 ,0.7)',
-            }
-        }
-		
-        var layer_StrikeForce_GA = new L.geoJson(json_StrikeForce_GA, {
-            attribution: '<a href=""></a>',
-            pane: 'pane_StrikeForce_GA',
-			onEachFeature: pop_StrikeForce_GA,
-			style: style_StrikeForce_GA,
-			interactive: true
-        });
-		bounds_group.addLayer(layer_StrikeForce_GA);
-        map.addLayer(layer_StrikeForce_GA);
-        
 		//Add poverty layer
 		
 		
@@ -314,7 +269,7 @@
 		var QualifiedResults='';
 		var match = 0;	
 		var basemap={};
-		var layergroups=([layer_Promise_zones_GA,layer_StrikeForce_GA,layer_CongressionalDistrictGA,layer_Tract_poverty_above50,layer_17FreeRedAllSchools_buffer]);
+		var layergroups=([layer_Promise_zones_GA,layer_CongressionalDistrictGA,layer_Tract_poverty_above50,layer_17FreeRedAllSchools_buffer]);
 		var popupproperties=["COMMUNITY","NAME","CD114FP","pct_185","School_Nam"];
 		var popupContents=[];
 		var ClickMarker;
@@ -322,7 +277,6 @@
 		//Layer Control
 		L.control.layers(basemap,{
 			"Congressional District":layer_CongressionalDistrictGA,
-			"Strike Force":layer_StrikeForce_GA,
 			"Poverty percentage above 50%":layer_Tract_poverty_above50,
 			"FRPL School Buffer":layer_17FreeRedAllSchools_buffer,
 			"Promise Zone":layer_Promise_zones_GA
