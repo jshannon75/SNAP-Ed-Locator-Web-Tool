@@ -54,6 +54,7 @@
 		<script src="Data/CongressionalDistrictGA.js"></script>
 		<script src="Data/Promise_zones_GA.js"></script>
 		<script src="Data/Tract_poverty_above50.js"></script>
+		<script src="Data/ZCTA_poverty_above50.js"></script>
 		
 		<script src="js/Autolinker.min.js"></script>
 		<script src="js/leaflet/leaflet.js"></script>
@@ -173,9 +174,7 @@
         map.addLayer(layer_CongressionalDistrictGA);
 			
 		
-		//Add Strike Force layer
-		
-		//Add poverty layer
+		//Add tract poverty layer
 		
 		
         function pop_Tract_poverty_above50(feature, layer) {
@@ -219,6 +218,52 @@
         });
 		bounds_group.addLayer(layer_Tract_poverty_above50);
         map.addLayer(layer_Tract_poverty_above50);
+        
+        
+    //Add zcta poverty layer
+		
+		
+        function pop_ZCTA_poverty_above50(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Poverty Percent</th>\
+                        <td>' + (feature.properties['PovertyPct'] !== null ? Autolinker.link(String(feature.properties['PovertyPct'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            //layer.bindPopup(popupContent, {maxHeight: 402});
+			layer.on({
+			click: clickPoint
+			});
+        }
+		
+		map.createPane('pane_ZCTA_poverty_above50');
+        map.getPane('pane_ZCTA_poverty_above50').style.zIndex = 402;
+        map.getPane('pane_ZCTA_poverty_above50').style['mix-blend-mode'] = 'normal';
+		
+		
+        function style_ZCTA_poverty_above50() {
+            return {
+                opacity: 1,
+                color: 'rgba(0,0,0,0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253, 205, 172 ,0.5)',
+            }
+        }
+		
+        var layer_ZCTA_poverty_above50 = new L.geoJson(json_ZCTA_poverty_above50, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_ZCTA_poverty_above50',
+			onEachFeature: pop_ZCTA_poverty_above50,
+			style: style_ZCTA_poverty_above50,
+			interactive: true
+        });
+		bounds_group.addLayer(layer_ZCTA_poverty_above50);
+        map.addLayer(layer_ZCTA_poverty_above50);
 		
 		//Add FreeRedLunch Schools layer
 		
@@ -269,7 +314,7 @@
 		var QualifiedResults='';
 		var match = 0;	
 		var basemap={};
-		var layergroups=([layer_Promise_zones_GA,layer_CongressionalDistrictGA,layer_Tract_poverty_above50,layer_17FreeRedAllSchools_buffer]);
+		var layergroups=([layer_Promise_zones_GA,layer_CongressionalDistrictGA,layer_Tract_poverty_above50,layer_ZCTA_poverty_above50,layer_17FreeRedAllSchools_buffer]);
 		var popupproperties=["COMMUNITY","NAME","CD114FP","pct_185","School_Nam"];
 		var popupContents=[];
 		var ClickMarker;
@@ -277,7 +322,8 @@
 		//Layer Control
 		L.control.layers(basemap,{
 			"Congressional District":layer_CongressionalDistrictGA,
-			"Poverty percentage above 50%":layer_Tract_poverty_above50,
+			"Tract Poverty percentage above 50%":layer_Tract_poverty_above50,
+			"ZCTA Poverty percentage above 50%":layer_ZCTA_poverty_above50,
 			"FRPL School Buffer":layer_17FreeRedAllSchools_buffer,
 			"Promise Zone":layer_Promise_zones_GA
 			},{collapsed:false}).addTo(map);
@@ -324,7 +370,7 @@
 		};
 
 		info.update = function (props) {
-			this._div.innerHTML = '<h1>' + props+'</h1><br><b>Congressional District: </b>' + popupContents[2]+'<br><b>Strike Force: </b>' + popupContents[1]+ '<br><b>Poverty percentage: </b>:' + popupContents[3]+'<br><b>Within 1 mile of FRPL school </b>:' + popupContents[4] + '<br><b>Promise Zone: </b>'+popupContents[0];
+			this._div.innerHTML = '<h1>' + props+'</h1><br><b>Congressional District: </b>' + popupContents[2]+'<br><b>Tract Poverty percentage: </b>:' + popupContents[3]+'<br><b>ZCTA Poverty percentage: </b>:' + popupContents[1]+'<br><b>Within 1 mile of FRPL school </b>:' + popupContents[4] + '<br><b>Promise Zone: </b>'+popupContents[0];
 		};
 
 		info.addTo(map);
