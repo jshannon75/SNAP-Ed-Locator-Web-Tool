@@ -11,7 +11,7 @@
 			crossorigin=""/>-->
 		<link rel="stylesheet" href="js/leaflet/leaflet.css">
 		<link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@2.6.0/dist/style.css">
-		<link  href="https://unpkg.com/leaflet-geosearch@latest/assets/css/leaflet.css" rel="stylesheet" />
+		<link href="https://unpkg.com/leaflet-geosearch@latest/assets/css/leaflet.css" rel="stylesheet" />
         <style>
         html, body, #map {
             width: 100%;
@@ -432,6 +432,13 @@
 			}
 			SearchResultsUpdate(result.location.x,result.location.y);
 		});
+		
+	var osmGeocoder = new L.Control.OSMGeocoder({
+            collapsed: false,
+            position: 'bottomleft',
+            text: 'Search',
+        });
+        osmGeocoder.addTo(map);
 		
 		//Set bounds
 		setBounds();
