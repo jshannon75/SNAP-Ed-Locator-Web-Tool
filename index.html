@@ -71,8 +71,8 @@
 		var bounds_group = new L.featureGroup([]);
 		
 		//Add basemap from Mapbox
-		var basemap = L.tileLayer('https://api.mapbox.com/styles/v1/wyjx1220/cje4iobyk71lj2rmwvjxsbmkl/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoid3lqeDEyMjAiLCJhIjoiY2pkdXBwMW84MWhwbDJ4bnk2OHh2OHhkMCJ9.5Evu2HhCD7u2Mi-KJ2NqOg', {
-            attribution: 'Map data &copy; <a href="http://mapbox.com">Mapbox</a>',
+		var basemap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
             maxZoom: 28
         });
         basemap.addTo(map);
@@ -113,7 +113,7 @@
                 weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(228, 26, 28 ,0.55)',
+                fillColor: 'rgba(170,255,0,0.25)',
             }
         }
 		
@@ -152,7 +152,7 @@
                 /*pane: 'CongressionalDistrictGA',*/
                 opacity: 1,
 				//Red outline
-                color: 'rgba(51,0,0,0.8)',
+                color: 'rgba(128,128,128,0.8)',
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
@@ -205,7 +205,7 @@
                 weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(253, 205, 172 ,0.5)',
+                fillColor: 'rgba(255, 0, 0,0.4)',
             }
         }
 		
@@ -251,7 +251,7 @@
                 weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(253, 205, 172 ,0.5)',
+                fillColor: 'rgba(255, 0, 0,0.4)',
             }
         }
 		
@@ -295,7 +295,7 @@
                 weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(77, 175, 74 ,0.35)',
+                fillColor: 'rgba(0, 197, 255,0.5)',
             }
         }
 		
