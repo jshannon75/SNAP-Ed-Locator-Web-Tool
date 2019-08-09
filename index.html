@@ -408,8 +408,11 @@
 		//var GoogleProvider = window.GeoSearch.GoogleProvider;
 		//var myProvider = new GoogleProvider;
 		
-		var OpenStreetMapProvider = window.GeoSearch.OpenStreetMapProvider;
-		var myProvider = new OpenStreetMapProvider;
+		//var OpenStreetMapProvider = window.GeoSearch.OpenStreetMapProvider;
+		//var myProvider = new OpenStreetMapProvider;
+		
+		var EsriProvider = window.GeoSearch.EsriProvider;
+		var myProvider = new EsriProvider;
 
 		var searchControl = new GeoSearchControl({
 				provider: myProvider,           // required
