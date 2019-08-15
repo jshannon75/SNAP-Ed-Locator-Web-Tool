@@ -13,6 +13,10 @@
 		<link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@2.6.0/dist/style.css">
 		<link href="https://unpkg.com/leaflet-geosearch@latest/assets/css/leaflet.css" rel="stylesheet" />
         <style>
+		.tab { 
+			margin-left: 10px; 
+		}
+		
         html, body, #map {
             width: 100%;
             height: 100%;
@@ -31,11 +35,16 @@
 			margin: 0 0 5px;
 			color: #777;
 		}
+		
         </style>
         <title></title>	
     </head>
 	
     <body>
+	
+	<h2 class="tab">SNAP-Ed categorical eligibility tool</h2>
+	<p class="tab">This map allows you to identify areas of Georgia that are categorically eligible for SNAP-Ed programming. Click on the magnifying address in the upper left to search by address or click on a location to see its eligibility. Your results are shown on the right side of the page. The layer selector tool also allows you to toggle which areas of categorical eligibility are shown. These data were last updated in August, 2019.</p>
+	
         <div id="map">
         </div>
 		<script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
@@ -65,7 +74,8 @@
 		
         <script>
         var map = L.map('map', {
-            zoomControl:true, maxZoom:28, minZoom:1
+            zoomControl:true, maxZoom:28, minZoom:1,
+			center: [-83.25, 32.6],zoom: 13
         });
         
 		var bounds_group = new L.featureGroup([]);
@@ -371,7 +381,7 @@
 		};
 
 		info.update = function (props) {
-			this._div.innerHTML = '<h1>' + props+'</h1><br><b>Congressional District: </b>' + popupContents[1]+'<br><b>Tract Poverty rate: </b>' + popupContents[2]+'<br><b>ZCTA poverty rate: </b>' + popupContents[3]+'<br><b>Within 1 mile of FRPL school: </b>' + popupContents[4] + '<br><b>Promise Zone: </b>'+popupContents[0];
+			this._div.innerHTML = '<h1>' + props+'</h1><br><b>Congressional District: </b>' + popupContents[1]+'<br><b>Tract Poverty rate: </b>' + popupContents[2]+'<br><b>ZCTA poverty rate: </b>' + popupContents[3]+'<br><b>FRPL school buffer: </b>' + popupContents[4] + '<br><b>Promise Zone: </b>'+popupContents[0];
 		};
 
 		info.addTo(map);
