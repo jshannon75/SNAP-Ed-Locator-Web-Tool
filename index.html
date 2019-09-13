@@ -238,7 +238,7 @@
             var popupContent = '<table>\
                     <tr>\
                         <th scope="row">Poverty Percent</th>\
-                        <td>' + (feature.properties['PovPctZ_txt'] !== null ? Autolinker.link(String(feature.properties['PovPctZ_txt'])) : '') + '%</td>\
+                        <td>' + (feature.properties['PovPctZ_tx'] !== null ? Autolinker.link(String(feature.properties['PovPctZ_tx'])) : '') + '%</td>\
                     </tr>\
                 </table>';
             //layer.bindPopup(popupContent, {maxHeight: 402});
@@ -326,7 +326,7 @@
 		var QualifiedResults='';
 		var match = 0;	
 		var basemap={};
-		var popupproperties=["COMMUNITY","CD114FP","PovPct_txt","PovPctZ_txt","School_Nam"];
+		var popupproperties=["COMMUNITY","CD114FP","PovPct_txt","PovPctZ_tx","School_Nam"];
 		var popupContents=[];
 		var ClickMarker;
 
