@@ -64,6 +64,7 @@
 		<script src="Data/Promise_zones_GA.js"></script>
 		<script src="Data/Tract_poverty_above50.js"></script>
 		<script src="Data/ZCTA_poverty_above50.js"></script>
+	  	<script src="Data/eligible_area_2017_2018.js"></script>
 		
 		<script src="js/Autolinker.min.js"></script>
 		<script src="js/leaflet/leaflet.js"></script>
@@ -94,6 +95,39 @@
                 map.fitBounds(bounds_group.getBounds());
             }
         }
+
+		//Add Eligible area layer 2017 & 2018
+		
+	map.createPane('pane_eligible_area_2017_2018');
+        map.getPane('pane_eligible_area_2017_2018').style.zIndex = 402;
+        map.getPane('pane_eligible_area_2017_2018').style['mix-blend-mode'] = 'normal';
+		
+		
+        function style_eligible_area_2017_2018() {
+            return {
+                opacity: 1,
+                color: 'rgba(0,0,0,0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,0,0,0)',
+            }
+        }
+		
+        var layer_eligible_area_2017_2018 = new L.geoJson(json_eligible_area_2017_2018, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_eligible_area_2017_2018',
+			onEachFeature: pop_eligible_area_2017_2018,
+			style: style_eligible_area_2017_2018,
+			interactive: true
+        });
+		bounds_group.addLayer(layer_eligible_area_2017_2018);
+        map.addLayer(layer_eligible_area_2017_2018);
+		
+		
 		//Add Promise zones layer
 		
         function pop_Promise_zones_GA(feature, layer) {
@@ -109,7 +143,7 @@
 			});
         }
 		
-		map.createPane('pane_Promise_zones_GA');
+	map.createPane('pane_Promise_zones_GA');
         map.getPane('pane_Promise_zones_GA').style.zIndex = 420;
         map.getPane('pane_Promise_zones_GA').style['mix-blend-mode'] = 'normal';
 		
@@ -322,7 +356,7 @@
 		
 		//Add overlays control
 				
-		var layergroups=([layer_Promise_zones_GA,layer_CongressionalDistrictGA,layer_Tract_poverty_above50,layer_ZCTA_poverty_above50,layer_18FreeRedAllSchools_buffer]);
+		var layergroups=([layer_eligible_area_2017_2018,layer_Promise_zones_GA,layer_CongressionalDistrictGA,layer_Tract_poverty_above50,layer_ZCTA_poverty_above50,layer_18FreeRedAllSchools_buffer]);
 		var QualifiedResults='';
 		var match = 0;	
 		var basemap={};
@@ -333,10 +367,11 @@
 		//Layer Control
 		L.control.layers(basemap,{
 			"Congressional boundaries (black)":layer_CongressionalDistrictGA,
+			"Eligible area 2017 & 2018 (grey)":layer_eligible_area_2017_2018,
 			"Qualifying tracts (red)":layer_Tract_poverty_above50,
 			"Qualifying ZCTAs (purple)":layer_ZCTA_poverty_above50,
 			"FRPL school buffers (blue)":layer_18FreeRedAllSchools_buffer,
-			"Promise Zones (green)":layer_Promise_zones_GA
+			"Promise Zones (green)":layer_Promise_zones_GA			
 			},{collapsed:false}).addTo(map);
 		
 		//Click event function
