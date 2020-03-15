@@ -58,7 +58,8 @@
 		<script src="https://unpkg.com/leaflet-geosearch@2.6.0/dist/bundle.js"></script>
 		<script src="https://unpkg.com/leaflet-geosearch@2.6.0/dist/bundle.min.js"></script>
 		
-		
+		       
+		<script src="Data/eligible_area_2017_2018.js"></script>
         <script src="Data/18FreeRedAllSchools_buffer.js"></script>
 		<script src="Data/CongressionalDistrictGA.js"></script>
 		<script src="Data/Promise_zones_GA.js"></script>
@@ -183,6 +184,51 @@
         });
 		bounds_group.addLayer(layer_CongressionalDistrictGA);
         map.addLayer(layer_CongressionalDistrictGA);
+		
+			
+				//Add Congressional District layer
+		
+        function pop_eligible_area_2017_2018(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Eligible areas 2017-2018</th>\
+                        <td>' + (feature.properties['layer_pro'] !== null ? Autolinker.link(String(feature.properties['layer_pro'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            //layer.bindPopup(popupContent, {maxHeight: 400});
+			layer.on({
+			click: clickPoint
+			});
+        }
+		
+		map.createPane('pane_eligible_area_2017_2018');
+        map.getPane('pane_eligible_area_2017_2018').style.zIndex = 430;
+        map.getPane('pane_eligible_area_2017_2018').style['mix-blend-mode'] = 'normal';
+		
+		
+        function style_eligible_area_2017_2018() {
+            return {
+                opacity: 1,
+                color: 'rgba(0,0,0,0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,0,0,0.2)',
+            }
+        }
+		
+        var layer_eligible_area_2017_2018 = new L.geoJson(json_eligible_area_2017_2018, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_eligible_area_2017_2018',
+			onEachFeature: pop_eligible_area_2017_2018,
+			style: style_eligible_area_2017_2018,
+			interactive: true
+        });
+		bounds_group.addLayer(layer_eligible_area_2017_2018);
+        map.addLayer(layer_eligible_area_2017_2018);
 			
 		
 		//Add tract poverty layer
@@ -322,11 +368,11 @@
 		
 		//Add overlays control
 				
-		var layergroups=([layer_Promise_zones_GA,layer_CongressionalDistrictGA,layer_Tract_poverty_above50,layer_ZCTA_poverty_above50,layer_18FreeRedAllSchools_buffer]);
+		var layergroups=([layer_Promise_zones_GA,layer_CongressionalDistrictGA,layer_eligible_area_2017_2018,layer_Tract_poverty_above50,layer_ZCTA_poverty_above50,layer_18FreeRedAllSchools_buffer]);
 		var QualifiedResults='';
 		var match = 0;	
 		var basemap={};
-		var popupproperties=["COMMUNITY","CD114FP","PovPct_txt","PovPctZ_tx","School_Nam"];
+		var popupproperties=["COMMUNITY","CD114FP","layer_pro","PovPct_txt","PovPctZ_tx","School_Nam"];
 		var popupContents=[];
 		var ClickMarker;
 
@@ -336,7 +382,8 @@
 			"Qualifying tracts (red)":layer_Tract_poverty_above50,
 			"Qualifying ZCTAs (purple)":layer_ZCTA_poverty_above50,
 			"FRPL school buffers (blue)":layer_18FreeRedAllSchools_buffer,
-			"Promise Zones (green)":layer_Promise_zones_GA
+			"Promise Zones (green)":layer_Promise_zones_GA,
+			"Qualifying areas 2017-2018 (grey)":layer_eligible_area_2017_2018
 			},{collapsed:false}).addTo(map);
 		
 		//Click event function
@@ -381,7 +428,7 @@
 		};
 
 		info.update = function (props) {
-			this._div.innerHTML = '<h1>' + props+'</h1><br><b>Congressional District: </b>' + popupContents[1]+'<br><b>Tract Poverty rate: </b>' + popupContents[2]+'<br><b>ZCTA poverty rate: </b>' + popupContents[3]+'<br><b>FRPL school buffer: </b>' + popupContents[4] + '<br><b>Promise Zone: </b>'+popupContents[0];
+			this._div.innerHTML = '<h1>' + props+'</h1><br><b>Qualifying areas 2017-2018: </b>' + popupContents[2]+'<br><b>Congressional District: </b>' + popupContents[1]+'<br><b>Tract Poverty rate (2017): </b>' + popupContents[3]+'<br><b>ZCTA poverty rate (2017): </b>' + popupContents[4]+'<br><b>FRPL school buffer (2018): </b>' + popupContents[5] + '<br><b>Promise Zone: </b>'+popupContents[0];
 		};
 
 		info.addTo(map);
