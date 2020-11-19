@@ -60,7 +60,7 @@
 		
 		       
 		<script src="Data/eligible_area_2017_2018.js"></script>
-        <script src="Data/18FreeRedAllSchools_buffer.js"></script>
+        <script src="Data/20FreeRedAllSchools_buffer.js"></script>
 		<script src="Data/CongressionalDistrictGA.js"></script>
 		<script src="Data/Promise_zones_GA.js"></script>
 		<script src="Data/Tract_poverty_above50.js"></script>
@@ -324,7 +324,7 @@
 		
 		//Add FreeRedLunch Schools layer
 		
-        function pop_18FreeRedAllSchools_buffer(feature, layer) {
+        function pop_20FreeRedAllSchools_buffer(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <th scope="row">Strike Force County</th>\
@@ -337,12 +337,12 @@
 			});
         }
 		
-		map.createPane('pane_18FreeRedAllSchools_buffer');
-        map.getPane('pane_18FreeRedAllSchools_buffer').style.zIndex = 403;
-        map.getPane('pane_18FreeRedAllSchools_buffer').style['mix-blend-mode'] = 'normal';
+		map.createPane('pane_20FreeRedAllSchools_buffer');
+        map.getPane('pane_20FreeRedAllSchools_buffer').style.zIndex = 403;
+        map.getPane('pane_20FreeRedAllSchools_buffer').style['mix-blend-mode'] = 'normal';
 		
 		
-        function style_18FreeRedAllSchools_buffer() {
+        function style_20FreeRedAllSchools_buffer() {
             return {
                 opacity: 1,
                 color: 'rgba(0,0,0,0)',
@@ -356,19 +356,19 @@
             }
         }
 		
-        var layer_18FreeRedAllSchools_buffer = new L.geoJson(json_18FreeRedAllSchools_buffer, {
+        var layer_20FreeRedAllSchools_buffer = new L.geoJson(json_20FreeRedAllSchools_buffer, {
             attribution: '<a href=""></a>',
-            pane: 'pane_18FreeRedAllSchools_buffer',
-			onEachFeature: pop_18FreeRedAllSchools_buffer,
-			style: style_18FreeRedAllSchools_buffer,
+            pane: 'pane_20FreeRedAllSchools_buffer',
+			onEachFeature: pop_20FreeRedAllSchools_buffer,
+			style: style_20FreeRedAllSchools_buffer,
 			interactive: true
         });
-		bounds_group.addLayer(layer_18FreeRedAllSchools_buffer);
-        map.addLayer(layer_18FreeRedAllSchools_buffer);
+		bounds_group.addLayer(layer_20FreeRedAllSchools_buffer);
+        map.addLayer(layer_20FreeRedAllSchools_buffer);
 		
 		//Add overlays control
 				
-		var layergroups=([layer_Promise_zones_GA,layer_CongressionalDistrictGA,layer_eligible_area_2017_2018,layer_Tract_poverty_above50,layer_ZCTA_poverty_above50,layer_18FreeRedAllSchools_buffer]);
+		var layergroups=([layer_Promise_zones_GA,layer_CongressionalDistrictGA,layer_eligible_area_2017_2018,layer_Tract_poverty_above50,layer_ZCTA_poverty_above50,layer_20FreeRedAllSchools_buffer]);
 		var QualifiedResults='';
 		var match = 0;	
 		var basemap={};
@@ -381,7 +381,7 @@
 			"Congressional boundaries (black)":layer_CongressionalDistrictGA,
 			"Qualifying tracts (red)":layer_Tract_poverty_above50,
 			"Qualifying ZCTAs (purple)":layer_ZCTA_poverty_above50,
-			"FRPL school buffers (blue)":layer_18FreeRedAllSchools_buffer,
+			"FRPL school buffers (blue)":layer_20FreeRedAllSchools_buffer,
 			"Promise Zones (green)":layer_Promise_zones_GA,
 			"All qualifying area (grey)":layer_eligible_area_2017_2018
 			},{collapsed:false}).addTo(map);
