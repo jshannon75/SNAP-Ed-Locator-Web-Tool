@@ -43,7 +43,7 @@
     <body>
 	
 	<h2 class="tab">SNAP-Ed categorical eligibility tool</h2>
-	<p class="tab">This map allows you to identify areas of Georgia that are categorically eligible for SNAP-Ed programming. Click on the magnifying address in the upper left to search by address or click on a location to see its eligibility. Your results are shown on the right side of the page. The layer selector tool also allows you to toggle which areas of categorical eligibility are shown. All qualifying area includes the census data both in 2017 and 2018. These data were last updated in January, 2020.</p>
+	<p class="tab">This map allows you to identify areas of Georgia that are categorically eligible for SNAP-Ed programming. Click on the magnifying address in the upper left to search by address or click on a location to see its eligibility. Your results are shown on the right side of the page. The layer selector tool also allows you to toggle which areas of categorical eligibility are shown. All qualifying area includes the census data both in 2017 and 2018. These data were last updated in March, 2021.</p>
 	
         <div id="map">
         </div>
@@ -428,7 +428,7 @@
 		};
 
 		info.update = function (props) {
-			this._div.innerHTML = '<h1>' + props+'</h1><br><b>All qualifying area: </b>' + popupContents[2]+'<br><b>Congressional District: </b>' + popupContents[1]+'<br><b>Tract Poverty rate (2017 data): </b>' + popupContents[3]+'<br><b>ZCTA poverty rate (2017 data): </b>' + popupContents[4]+'<br><b>FRPL school buffer (2020 data): </b>' + popupContents[5] + '<br><b>Promise Zone: </b>'+popupContents[0];
+			this._div.innerHTML = '<h1>' + props+'</h1><br><b>All qualifying area: </b>' + popupContents[2]+'<br><b>Congressional District: </b>' + popupContents[1]+'<br><b>Tract Poverty rate (2017 data): </b>' + popupContents[3]+'<br><b>ZCTA poverty rate (2017 data): </b>' + popupContents[4]+'<br><b>FRPL school buffer (2021 data): </b>' + popupContents[5] + '<br><b>Promise Zone: </b>'+popupContents[0];
 		};
 
 		info.addTo(map);
