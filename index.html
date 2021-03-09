@@ -63,8 +63,8 @@
         <script src="Data/frplschools_2021.js"></script>
 		<script src="Data/CongressionalDistrictGA.js"></script>
 		<script src="Data/Promise_zones_GA.js"></script>
-		<script src="Data/Tract_poverty_above50.js"></script>
-		<script src="Data/ZCTA_poverty_above50.js"></script>
+		<script src="Data/Tract_poverty19_above51.js"></script>
+		<script src="Data/ZCTA_poverty19_above51.js"></script>
 		
 		<script src="js/Autolinker.min.js"></script>
 		<script src="js/leaflet/leaflet.js"></script>
@@ -234,11 +234,11 @@
 		//Add tract poverty layer
 		
 		
-        function pop_Tract_poverty_above50(feature, layer) {
+        function pop_Tract_poverty19_above51(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <th scope="row">Poverty Percent</th>\
-                        <td>' + (feature.properties['PovPct_txt'] !== null ? Autolinker.link(String(feature.properties['PovPct_txt'])) : '') + '</td>\
+                        <td>' + (feature.properties['185_Pov_Pc'] !== null ? Autolinker.link(String(feature.properties['185_Pov_Pc'])) : '') + '</td>\
                     </tr>\
                 </table>';
             //layer.bindPopup(popupContent, {maxHeight: 402});
@@ -247,12 +247,12 @@
 			});
         }
 		
-		map.createPane('pane_Tract_poverty_above50');
-        map.getPane('pane_Tract_poverty_above50').style.zIndex = 402;
-        map.getPane('pane_Tract_poverty_above50').style['mix-blend-mode'] = 'normal';
+		map.createPane('pane_Tract_poverty19_above51');
+        map.getPane('pane_Tract_poverty19_above51').style.zIndex = 402;
+        map.getPane('pane_Tract_poverty19_above51').style['mix-blend-mode'] = 'normal';
 		
 		
-        function style_Tract_poverty_above50() {
+        function style_Tract_poverty19_above51() {
             return {
                 opacity: 1,
                 color: 'rgba(0,0,0,0)',
@@ -266,25 +266,25 @@
             }
         }
 		
-        var layer_Tract_poverty_above50 = new L.geoJson(json_Tract_poverty_above50, {
+        var layer_Tract_poverty19_above51 = new L.geoJson(json_Tract_poverty19_above51, {
             attribution: '<a href=""></a>',
-            pane: 'pane_Tract_poverty_above50',
-			onEachFeature: pop_Tract_poverty_above50,
-			style: style_Tract_poverty_above50,
+            pane: 'pane_Tract_poverty19_above51',
+			onEachFeature: pop_Tract_poverty19_above51,
+			style: style_Tract_poverty19_above51,
 			interactive: true
         });
-		bounds_group.addLayer(layer_Tract_poverty_above50);
-        map.addLayer(layer_Tract_poverty_above50);
+		bounds_group.addLayer(layer_Tract_poverty19_above51);
+        map.addLayer(layer_Tract_poverty19_above51);
         
         
     //Add zcta poverty layer
 		
 		
-        function pop_ZCTA_poverty_above50(feature, layer) {
+        function pop_ZCTA_poverty19_above51(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <th scope="row">Poverty Percent</th>\
-                        <td>' + (feature.properties['PovPctZ_tx'] !== null ? Autolinker.link(String(feature.properties['PovPctZ_tx'])) : '') + '%</td>\
+                        <td>' + (feature.properties['185_Pov_Pc'] !== null ? Autolinker.link(String(feature.properties['185_Pov_Pc'])) : '') + '%</td>\
                     </tr>\
                 </table>';
             //layer.bindPopup(popupContent, {maxHeight: 402});
@@ -293,12 +293,12 @@
 			});
         }
 		
-		map.createPane('pane_ZCTA_poverty_above50');
-        map.getPane('pane_ZCTA_poverty_above50').style.zIndex = 402;
-        map.getPane('pane_ZCTA_poverty_above50').style['mix-blend-mode'] = 'normal';
+		map.createPane('pane_ZCTA_poverty19_above51');
+        map.getPane('pane_ZCTA_poverty19_above51').style.zIndex = 402;
+        map.getPane('pane_ZCTA_poverty19_above51').style['mix-blend-mode'] = 'normal';
 		
 		
-        function style_ZCTA_poverty_above50() {
+        function style_ZCTA_poverty19_above51() {
             return {
                 opacity: 1,
                 color: 'rgba(0,0,0,0)',
@@ -312,15 +312,15 @@
             }
         }
 		
-        var layer_ZCTA_poverty_above50 = new L.geoJson(json_ZCTA_poverty_above50, {
+        var layer_ZCTA_poverty19_above51 = new L.geoJson(json_ZCTA_poverty19_above51, {
             attribution: '<a href=""></a>',
-            pane: 'pane_ZCTA_poverty_above50',
-			onEachFeature: pop_ZCTA_poverty_above50,
-			style: style_ZCTA_poverty_above50,
+            pane: 'pane_ZCTA_poverty19_above51',
+			onEachFeature: pop_ZCTA_poverty19_above51,
+			style: style_ZCTA_poverty19_above51,
 			interactive: true
         });
-		bounds_group.addLayer(layer_ZCTA_poverty_above50);
-        map.addLayer(layer_ZCTA_poverty_above50);
+		bounds_group.addLayer(layer_ZCTA_poverty19_above51);
+        map.addLayer(layer_ZCTA_poverty19_above51);
 		
 		//Add FreeRedLunch Schools layer
 		
@@ -368,19 +368,19 @@
 		
 		//Add overlays control
 				
-		var layergroups=([layer_Promise_zones_GA,layer_CongressionalDistrictGA,layer_eligible_area_2017_2018,layer_Tract_poverty_above50,layer_ZCTA_poverty_above50,layer_frplschools_2021]);
+		var layergroups=([layer_Promise_zones_GA,layer_CongressionalDistrictGA,layer_eligible_area_2017_2018,layer_Tract_poverty19_above51,layer_ZCTA_poverty19_above51,layer_frplschools_2021]);
 		var QualifiedResults='';
 		var match = 0;	
 		var basemap={};
-		var popupproperties=["COMMUNITY","CD114FP","layer_pro","PovPct_txt","PovPctZ_tx","Name_Geoco"];
+		var popupproperties=["COMMUNITY","CD114FP","layer_pro","185_Pov_Pc","185_Pov_Pc","Name_Geoco"];
 		var popupContents=[];
 		var ClickMarker;
 
 		//Layer Control
 		L.control.layers(basemap,{
 			"Congressional boundaries (black)":layer_CongressionalDistrictGA,
-			"Qualifying tracts (red)":layer_Tract_poverty_above50,
-			"Qualifying ZCTAs (purple)":layer_ZCTA_poverty_above50,
+			"Qualifying tracts (red)":layer_Tract_poverty19_above51,
+			"Qualifying ZCTAs (purple)":layer_ZCTA_poverty19_above51,
 			"FRPL school buffers (blue)":layer_frplschools_2021,
 			"Promise Zones (green)":layer_Promise_zones_GA,
 			"All qualifying area (grey)":layer_eligible_area_2017_2018
@@ -428,7 +428,7 @@
 		};
 
 		info.update = function (props) {
-			this._div.innerHTML = '<h1>' + props+'</h1><br><b>All qualifying area: </b>' + popupContents[2]+'<br><b>Congressional District: </b>' + popupContents[1]+'<br><b>Tract Poverty rate (2017 data): </b>' + popupContents[3]+'<br><b>ZCTA poverty rate (2017 data): </b>' + popupContents[4]+'<br><b>FRPL school buffer (2021 data): </b>' + popupContents[5] + '<br><b>Promise Zone: </b>'+popupContents[0];
+			this._div.innerHTML = '<h1>' + props+'</h1><br><b>All qualifying area: </b>' + popupContents[2]+'<br><b>Congressional District: </b>' + popupContents[1]+'<br><b>Tract Poverty rate (2019 data): </b>' + popupContents[3]+'<br><b>ZCTA poverty rate (2019 data): </b>' + popupContents[4]+'<br><b>FRPL school buffer (2021 data): </b>' + popupContents[5] + '<br><b>Promise Zone: </b>'+popupContents[0];
 		};
 
 		info.addTo(map);
