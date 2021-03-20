@@ -43,7 +43,7 @@
     <body>
 	
 	<h2 class="tab">SNAP-Ed categorical eligibility tool</h2>
-	<p class="tab">This map allows you to identify areas of Georgia that are categorically eligible for SNAP-Ed programming. Click on the magnifying address in the upper left to search by address or click on a location to see its eligibility. Your results are shown on the right side of the page. The layer selector tool also allows you to toggle which areas of categorical eligibility are shown. All qualifying area includes the census data both in 2017 and 2018. These data were last updated in March, 2021.</p>
+	<p class="tab">This map allows you to identify areas of Georgia that are categorically eligible for SNAP-Ed programming. Click on the magnifying address in the upper left to search by address or click on a location to see its eligibility. Your results are shown on the right side of the page. The layer selector tool also allows you to toggle which areas of categorical eligibility are shown. Previous qualifying area includes the census data both in 2017 and 2018. These data were last updated in March, 2021.</p>
 	
         <div id="map">
         </div>
@@ -368,7 +368,7 @@
 		
 		//Add overlays control
 				
-		var layergroups=([layer_Promise_zones_GA,layer_CongressionalDistrictGA,layer_eligible_area_2017_2018,layer_Tract_poverty19_above51,layer_ZCTA_poverty19_above51,layer_frplschools_2021]);
+		var layergroups=([layer_Promise_zones_GA,layer_CongressionalDistrictGA,layer_Tract_poverty19_above51,layer_ZCTA_poverty19_above51,layer_frplschools_2021]);
 		var QualifiedResults='';
 		var match = 0;	
 		var basemap={};
@@ -383,7 +383,7 @@
 			"Qualifying ZCTAs (purple)":layer_ZCTA_poverty19_above51,
 			"FRPL school buffers (blue)":layer_frplschools_2021,
 			"Promise Zones (green)":layer_Promise_zones_GA,
-			"All qualifying area (grey)":layer_eligible_area_2017_2018
+			"Previous qualifying area (grey)":layer_eligible_area_2017_2018
 			},{collapsed:false}).addTo(map);
 		
 		//Click event function
@@ -428,7 +428,7 @@
 		};
 
 		info.update = function (props) {
-			this._div.innerHTML = '<h1>' + props+'</h1><br><b>All qualifying area: </b>' + popupContents[2]+'<br><b>Congressional District: </b>' + popupContents[1]+'<br><b>Tract Poverty rate (2019 data): </b>' + popupContents[3]+'<br><b>ZCTA poverty rate (2019 data): </b>' + popupContents[4]+'<br><b>FRPL school buffer (2021 data): </b>' + popupContents[5] + '<br><b>Promise Zone: </b>'+popupContents[0];
+			this._div.innerHTML = '<h1>' + props+'</h1><br><b>Congressional District: </b>' + popupContents[1]+'<br><b>Tract Poverty rate (2019 data): </b>' + popupContents[3]+'<br><b>ZCTA poverty rate (2019 data): </b>' + popupContents[4]+'<br><b>FRPL school buffer (2021 data): </b>' + popupContents[5] + '<br><b>Promise Zone: </b>'+popupContents[0];
 		};
 
 		info.addTo(map);
