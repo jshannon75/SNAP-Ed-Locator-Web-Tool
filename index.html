@@ -60,7 +60,7 @@
 		
 		       
 		<script src="Data/eligible_area_2017_2018.js"></script>
-        <script src="Data/frplschools_2021.js"></script>
+        <script src="Data/FRPL_QualSchools_1mile_buffer_2021_05312021.js"></script>
 		<script src="Data/CongressionalDistrictGA.js"></script>
 		<script src="Data/Promise_zones_GA.js"></script>
 		<script src="Data/Tract_poverty19_above51.js"></script>
@@ -324,7 +324,7 @@
 		
 		//Add FreeRedLunch Schools layer
 		
-        function pop_frplschools_2021(feature, layer) {
+        function pop_FRPL_QualSchools_1mile_buffer_2021_05312021(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <th scope="row">Strike Force County</th>\
@@ -337,12 +337,12 @@
 			});
         }
 		
-		map.createPane('pane_frplschools_2021');
-        map.getPane('pane_frplschools_2021').style.zIndex = 403;
-        map.getPane('pane_frplschools_2021').style['mix-blend-mode'] = 'normal';
+		map.createPane('pane_FRPL_QualSchools_1mile_buffer_2021_05312021');
+        map.getPane('pane_FRPL_QualSchools_1mile_buffer_2021_05312021').style.zIndex = 403;
+        map.getPane('pane_FRPL_QualSchools_1mile_buffer_2021_05312021').style['mix-blend-mode'] = 'normal';
 		
 		
-        function style_frplschools_2021() {
+        function style_FRPL_QualSchools_1mile_buffer_2021_05312021() {
             return {
                 opacity: 1,
                 color: 'rgba(0,0,0,0)',
@@ -356,19 +356,19 @@
             }
         }
 		
-        var layer_frplschools_2021 = new L.geoJson(json_frplschools_2021, {
+        var layer_FRPL_QualSchools_1mile_buffer_2021_05312021 = new L.geoJson(json_FRPL_QualSchools_1mile_buffer_2021_05312021, {
             attribution: '<a href=""></a>',
-            pane: 'pane_frplschools_2021',
-			onEachFeature: pop_frplschools_2021,
-			style: style_frplschools_2021,
+            pane: 'pane_FRPL_QualSchools_1mile_buffer_2021_05312021',
+			onEachFeature: pop_FRPL_QualSchools_1mile_buffer_2021_05312021,
+			style: style_FRPL_QualSchools_1mile_buffer_2021_05312021,
 			interactive: true
         });
-		bounds_group.addLayer(layer_frplschools_2021);
-        map.addLayer(layer_frplschools_2021);
+		bounds_group.addLayer(layer_FRPL_QualSchools_1mile_buffer_2021_05312021);
+        map.addLayer(layer_FRPL_QualSchools_1mile_buffer_2021_05312021);
 		
 		//Add overlays control
 				
-		var layergroups=([layer_Promise_zones_GA,layer_CongressionalDistrictGA,layer_Tract_poverty19_above51,layer_ZCTA_poverty19_above51,layer_frplschools_2021]);
+		var layergroups=([layer_Promise_zones_GA,layer_CongressionalDistrictGA,layer_Tract_poverty19_above51,layer_ZCTA_poverty19_above51,layer_FRPL_QualSchools_1mile_buffer_2021_05312021]);
 		var QualifiedResults='';
 		var match = 0;	
 		var basemap={};
@@ -381,7 +381,7 @@
 			"Congressional boundaries (black)":layer_CongressionalDistrictGA,
 			"Qualifying tracts (red)":layer_Tract_poverty19_above51,
 			"Qualifying ZCTAs (purple)":layer_ZCTA_poverty19_above51,
-			"FRPL school buffers (blue)":layer_frplschools_2021,
+			"FRPL school buffers (blue)":layer_FRPL_QualSchools_1mile_buffer_2021_05312021,
 			"Promise Zones (green)":layer_Promise_zones_GA,
 			"Previous qualifying area (grey)":layer_eligible_area_2017_2018
 			},{collapsed:false}).addTo(map);
