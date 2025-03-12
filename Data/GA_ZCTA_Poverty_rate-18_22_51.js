@@ -1,4 +1,4 @@
-var json_ZCTA_poverty19_above51 = {
+var json_ZCTA_poverty_above51 = {
 "type": "FeatureCollection",
 "name": "GA_ZCTA_Poverty_rate-18_22_51",
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::4269" } },

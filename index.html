@@ -43,7 +43,7 @@
     <body>
 	
 	<h2 class="tab">SNAP-Ed categorical eligibility tool</h2>
-	<p class="tab">This map allows you to identify areas of Georgia that are categorically eligible for SNAP-Ed programming. Click on the magnifying address in the upper left to search by address or click on a location to see its eligibility. Your results are shown on the right side of the page. The layer selector tool also allows you to toggle which areas of categorical eligibility are shown. Previous qualifying area includes the census data both in 2017 and 2018. These data were last updated in May, 2021.</p>
+	<p class="tab">This map allows you to identify areas of Georgia that are categorically eligible for SNAP-Ed programming. Click on the magnifying address in the upper left to search by address or click on a location to see its eligibility. Your results are shown on the right side of the page. The layer selector tool also allows you to toggle which areas of categorical eligibility are shown. These data were last updated in March, 2025.</p>
 	
         <div id="map">
         </div>
@@ -63,8 +63,8 @@
         <script src="Data/FRPL_QualSchools_1mile_buffer_2021_05312021.js"></script>
 		<script src="Data/CongressionalDistrictGA.js"></script>
 		<script src="Data/Promise_zones_GA.js"></script>
-		<script src="Data/Tract_poverty19_above51.js"></script>
-		<script src="Data/ZCTA_poverty19_above51.js"></script>
+		<script src="Data/Tract_poverty23_above51.js"></script>
+		<script src="Data/GA_ZCTA_Poverty_rate-18_22_51.js"></script>
 		
 		<script src="js/Autolinker.min.js"></script>
 		<script src="js/leaflet/leaflet.js"></script>
@@ -234,7 +234,7 @@
 		//Add tract poverty layer
 		
 		
-        function pop_Tract_poverty19_above51(feature, layer) {
+        function pop_Tract_poverty_above51(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <th scope="row">Poverty Percent</th>\
@@ -247,12 +247,12 @@
 			});
         }
 		
-		map.createPane('pane_Tract_poverty19_above51');
-        map.getPane('pane_Tract_poverty19_above51').style.zIndex = 402;
-        map.getPane('pane_Tract_poverty19_above51').style['mix-blend-mode'] = 'normal';
+		map.createPane('pane_Tract_poverty_above51');
+        map.getPane('pane_Tract_poverty_above51').style.zIndex = 402;
+        map.getPane('pane_Tract_poverty_above51').style['mix-blend-mode'] = 'normal';
 		
 		
-        function style_Tract_poverty19_above51() {
+        function style_Tract_poverty_above51() {
             return {
                 opacity: 1,
                 color: 'rgba(0,0,0,0)',
@@ -266,21 +266,21 @@
             }
         }
 		
-        var layer_Tract_poverty19_above51 = new L.geoJson(json_Tract_poverty19_above51, {
+        var layer_Tract_poverty_above51 = new L.geoJson(json_Tract_poverty_above51, {
             attribution: '<a href=""></a>',
-            pane: 'pane_Tract_poverty19_above51',
-			onEachFeature: pop_Tract_poverty19_above51,
-			style: style_Tract_poverty19_above51,
+            pane: 'pane_Tract_poverty_above51',
+			onEachFeature: pop_Tract_poverty_above51,
+			style: style_Tract_poverty_above51,
 			interactive: true
         });
-		bounds_group.addLayer(layer_Tract_poverty19_above51);
-        map.addLayer(layer_Tract_poverty19_above51);
+		bounds_group.addLayer(layer_Tract_poverty_above51);
+        map.addLayer(layer_Tract_poverty_above51);
         
         
     //Add zcta poverty layer
 		
 		
-        function pop_ZCTA_poverty19_above51(feature, layer) {
+        function pop_ZCTA_poverty_above51(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <th scope="row">Poverty Percent</th>\
@@ -293,12 +293,12 @@
 			});
         }
 		
-		map.createPane('pane_ZCTA_poverty19_above51');
-        map.getPane('pane_ZCTA_poverty19_above51').style.zIndex = 402;
-        map.getPane('pane_ZCTA_poverty19_above51').style['mix-blend-mode'] = 'normal';
+		map.createPane('pane_ZCTA_poverty_above51');
+        map.getPane('pane_ZCTA_poverty_above51').style.zIndex = 402;
+        map.getPane('pane_ZCTA_poverty_above51').style['mix-blend-mode'] = 'normal';
 		
 		
-        function style_ZCTA_poverty19_above51() {
+        function style_ZCTA_poverty_above51() {
             return {
                 opacity: 1,
                 color: 'rgba(0,0,0,0)',
@@ -312,15 +312,15 @@
             }
         }
 		
-        var layer_ZCTA_poverty19_above51 = new L.geoJson(json_ZCTA_poverty19_above51, {
+        var layer_ZCTA_poverty_above51 = new L.geoJson(json_ZCTA_poverty_above51, {
             attribution: '<a href=""></a>',
-            pane: 'pane_ZCTA_poverty19_above51',
-			onEachFeature: pop_ZCTA_poverty19_above51,
-			style: style_ZCTA_poverty19_above51,
+            pane: 'pane_ZCTA_poverty_above51',
+			onEachFeature: pop_ZCTA_poverty_above51,
+			style: style_ZCTA_poverty_above51,
 			interactive: true
         });
-		bounds_group.addLayer(layer_ZCTA_poverty19_above51);
-        map.addLayer(layer_ZCTA_poverty19_above51);
+		bounds_group.addLayer(layer_ZCTA_poverty_above51);
+        map.addLayer(layer_ZCTA_poverty_above51);
 		
 		//Add FreeRedLunch Schools layer
 		
@@ -368,7 +368,7 @@
 		
 		//Add overlays control
 				
-		var layergroups=([layer_Promise_zones_GA,layer_CongressionalDistrictGA,layer_Tract_poverty19_above51,layer_ZCTA_poverty19_above51,layer_FRPL_QualSchools_1mile_buffer_2021_05312021]);
+		var layergroups=([layer_Promise_zones_GA,layer_CongressionalDistrictGA,layer_Tract_poverty_above51,layer_ZCTA_poverty_above51,layer_FRPL_QualSchools_1mile_buffer_2021_05312021]);
 		var QualifiedResults='';
 		var match = 0;	
 		var basemap={};
@@ -379,8 +379,8 @@
 		//Layer Control
 		L.control.layers(basemap,{
 			"Congressional boundaries (black)":layer_CongressionalDistrictGA,
-			"Qualifying tracts (red)":layer_Tract_poverty19_above51,
-			"Qualifying ZCTAs (purple)":layer_ZCTA_poverty19_above51,
+			"Qualifying tracts (red)":layer_Tract_poverty_above51,
+			"Qualifying ZCTAs (purple)":layer_ZCTA_poverty_above51,
 			"FRPL school buffers (blue)":layer_FRPL_QualSchools_1mile_buffer_2021_05312021,
 			"Promise Zones (green)":layer_Promise_zones_GA,
 			"Previous qualifying area (grey)":layer_eligible_area_2017_2018
